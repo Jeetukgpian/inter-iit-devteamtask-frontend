@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import styled from "styled-components";
-import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
+import { FaSignInAlt, FaUserPlus, FaSpinner } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 const Container = styled.div`
@@ -104,6 +104,14 @@ const ToggleLink = styled.span`
   }
 `;
 
+const SpinnerIcon = styled(FaSpinner)`
+  animation: spin 1s linear infinite;
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+
 function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState("");
@@ -111,9 +119,11 @@ function Auth() {
   const [password, setPassword] = useState("");
   const { loginUser, registerUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       if (isLogin) {
         await loginUser(email, password);
@@ -122,7 +132,10 @@ function Auth() {
       }
       navigate("/");
     } catch (error) {
-      throw error;
+      // Handle error (e.g., show error message)
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -165,9 +178,16 @@ function Auth() {
             type="submit"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            disabled={isLoading}
           >
-            {isLogin ? <FaSignInAlt /> : <FaUserPlus />}
-            <span>{isLogin ? "Log In" : "Sign Up"}</span>
+            {isLoading ? (
+              <SpinnerIcon />
+            ) : isLogin ? (
+              <FaSignInAlt />
+            ) : (
+              <FaUserPlus />
+            )}
+            <span>{isLoading ? "Processing..." : isLogin ? "Log In" : "Sign Up"}</span>
           </Button>
         </form>
         <ToggleText>

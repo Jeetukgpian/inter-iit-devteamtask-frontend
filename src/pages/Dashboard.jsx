@@ -193,7 +193,25 @@ const SubLocationItem = styled.li`
 const FilterContainer = styled.div`
   margin-bottom: 1rem;
   display: flex;
+  flex-direction: column;
   gap: 1rem;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+`;
+
+const FilterGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
+
+const FilterLabel = styled.label`
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+  color: #4a5568;
 `;
 
 const FilterInput = styled.input`
@@ -201,6 +219,21 @@ const FilterInput = styled.input`
   border: 1px solid #e2e8f0;
   border-radius: 4px;
   width: 100%;
+  font-size: 1rem;
+
+  &:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  }
+`;
+
+const FilterButton = styled(Button)`
+  width: 100%;
+
+  @media (min-width: 768px) {
+    width: auto;
+  }
 `;
 
 const shimmer = keyframes`
@@ -520,27 +553,39 @@ function Dashboard() {
         </Sidebar>
         <MainContent>
           <FilterContainer>
-            <FilterInput
-              type="text"
-              placeholder="Filter by Category"
-              value={filterCategory}
-              onChange={(e) => setFilterCategory(e.target.value)}
-            />
-            <FilterInput
-              type="text"
-              placeholder="Filter by Brand"
-              value={filterBrand}
-              onChange={(e) => setFilterBrand(e.target.value)}
-            />
-            <FilterInput
-              type="text"
-              placeholder="Filter by Status"
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value)}
-            />
-            <Button onClick={clearFilters}>Clear Filters</Button>
+            <FilterGroup>
+              <FilterLabel htmlFor="category">Category</FilterLabel>
+              <FilterInput
+                id="category"
+                type="text"
+                placeholder="Filter by Category"
+                value={filterCategory}
+                onChange={(e) => setFilterCategory(e.target.value)}
+              />
+            </FilterGroup>
+            <FilterGroup>
+              <FilterLabel htmlFor="brand">Brand</FilterLabel>
+              <FilterInput
+                id="brand"
+                type="text"
+                placeholder="Filter by Brand"
+                value={filterBrand}
+                onChange={(e) => setFilterBrand(e.target.value)}
+              />
+            </FilterGroup>
+            <FilterGroup>
+              <FilterLabel htmlFor="status">Status</FilterLabel>
+              <FilterInput
+                id="status"
+                type="text"
+                placeholder="Filter by Status"
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+              />
+            </FilterGroup>
+            <FilterButton onClick={clearFilters}>Clear Filters</FilterButton>
           </FilterContainer>
-          {isFetching && <div>Loading filters...</div>}{" "}
+          {isFetching && <div>Loading filters...</div>}
           {showAddItemForm ? (
             <CreateLocationForm onSubmit={handleCreateItem}>
               <FormTitle>Add New Item</FormTitle>
