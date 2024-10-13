@@ -5,7 +5,6 @@ export const getItemById = async (id) => {
     const response = await api.get(`/items/${id}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching item:", error);
     throw error;
   }
 };
@@ -15,7 +14,6 @@ export const createItem = async (item) => {
     const response = await api.post("/items", item);
     return response.data;
   } catch (error) {
-    console.error("Error creating item:", error);
     throw error;
   }
 };
@@ -25,7 +23,6 @@ export const getItems = async (filters = {}) => {
     const response = await api.get("/items", { params: filters });
     return response.data;
   } catch (error) {
-    console.error("Error fetching items:", error);
     throw error;
   }
 };
@@ -34,7 +31,6 @@ export const deleteItem = async (id) => {
   try {
     await api.delete(`/items/${id}`);
   } catch (error) {
-    console.error("Error deleting item:", error);
     throw error;
   }
 };

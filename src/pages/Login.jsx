@@ -11,22 +11,34 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1rem;
 `;
 
 const Card = styled(motion.div)`
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
   border-radius: 20px 0 20px 0;
-  padding: 3rem;
+  padding: 2rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
+
+  @media (min-width: 768px) {
+    padding: 3rem;
+  }
 `;
 
 const Title = styled.h1`
   font-family: "Poppins", sans-serif;
   color: #333;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
 `;
 
 const Input = styled(motion.input)`
@@ -37,6 +49,7 @@ const Input = styled(motion.input)`
   border-bottom: 2px solid #ddd;
   background: transparent;
   transition: border-color 0.3s;
+  font-size: 1rem;
 
   &:focus {
     outline: none;
@@ -46,7 +59,7 @@ const Input = styled(motion.input)`
 
 const Button = styled(motion.button)`
   width: 100%;
-  padding: 1rem;
+  padding: 0.75rem;
   background: linear-gradient(to right, #667eea, #764ba2);
   color: white;
   border: none;
@@ -54,16 +67,31 @@ const Button = styled(motion.button)`
   cursor: pointer;
   font-weight: bold;
   transition: opacity 0.3s;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 
   &:hover {
     opacity: 0.9;
+  }
+
+  @media (min-width: 768px) {
+    padding: 1rem;
   }
 `;
 
 const ToggleText = styled.p`
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   color: #4a5568;
+  font-size: 0.9rem;
+
+  @media (min-width: 768px) {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+  }
 `;
 
 const ToggleLink = styled.span`
@@ -94,7 +122,7 @@ function Auth() {
       }
       navigate("/");
     } catch (error) {
-      console.error(isLogin ? "Login failed:" : "Registration failed:", error);
+      throw error;
     }
   };
 
@@ -113,7 +141,7 @@ function Auth() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Username"
-              whileFocus={{ scale: 1.05 }}
+              whileFocus={{ scale: 1.02 }}
               required
             />
           )}
@@ -122,7 +150,7 @@ function Auth() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            whileFocus={{ scale: 1.05 }}
+            whileFocus={{ scale: 1.02 }}
             required
           />
           <Input
@@ -130,16 +158,16 @@ function Auth() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-            whileFocus={{ scale: 1.05 }}
+            whileFocus={{ scale: 1.02 }}
             required
           />
           <Button
             type="submit"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             {isLogin ? <FaSignInAlt /> : <FaUserPlus />}
-            {isLogin ? "Log In" : "Sign Up"}
+            <span>{isLogin ? "Log In" : "Sign Up"}</span>
           </Button>
         </form>
         <ToggleText>

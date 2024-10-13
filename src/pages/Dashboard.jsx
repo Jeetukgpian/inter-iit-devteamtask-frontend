@@ -441,7 +441,6 @@ function Dashboard() {
       }
       setError(null);
     } catch (err) {
-      console.error(err);
       setError(`Failed to delete ${type}. Please try again.`);
     }
   };

@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
       const userData = await getProfile();
       setUser(userData);
     } catch (error) {
-      console.error("Error fetching user profile:", error);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -42,7 +42,6 @@ export const AuthProvider = ({ children }) => {
 
   const registerUser = async (username, email, password) => {
     const data = await register(username, email, password);
-    localStorage.setItem("token", data.token);
     setUser(data.user);
   };
 
